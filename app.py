@@ -47,10 +47,19 @@ def user_posts(username):
 
 @app.route('/api/posts/')
 def api_posts():
-    """выводит все посты в json"""
+    """страница выводит все посты в json"""
 
     posts_js = posts.get_posts_all()
     return jsonify(posts_js)
+
+
+@app.route('/api/posts/<post_id>')
+def api_one_post(post_id):
+    """страница выводит один пост json"""
+
+    one_post = posts.get_post_by_pk(post_id)
+    return jsonify(one_post)
+
 
 if __name__ == "__main__":
     app.run()

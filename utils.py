@@ -1,22 +1,35 @@
-from json import load, dumps
+from json import load, JSONDecodeError
 
 class ToGet:
 
     def __init__(self, path):
         """Инициализирует все посты сразу по месту нахождения json"""
-        self.path = path
-        with open(self.path, "r", encoding="utf-8") as file:
-            all_ = load(file)
-        self.all_posts = all_
 
+        if type(path) != str:
+            raise TypeError("должно быть str")
+
+        self.path = path
+        try:
+            with open(self.path, "r", encoding="utf-8") as file:
+                all_ = load(file)
+            self.all_posts = all_
+
+        except FileNotFoundError:
+            print("не правильный путь")
+        except JSONDecodeError:
+            print("ошибка в json")
 
     def get_posts_all(self):
         """загружает все посты"""
-        return self.all_posts
+        try:
+            return self.all_posts
+        except AttributeError:
+            ("не был загружен атрибут")
     
 
     def get_posts_by_user(self, user_name):
         """возвращает посты юзера"""
+        
         user_posts = []
         for i in self.all_posts:
             if user_name == i["poster_name"]:

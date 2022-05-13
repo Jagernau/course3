@@ -30,9 +30,14 @@
     <section class="items">
       <div class="items__item item">
         <div class="item__top">
-          <a href="/user-feed.html" class="item__head">
+          <a href="/users/{{user}}" class="item__head">
             <div class="item__ava-wrap">
-              <img src="{{posts[0]['poster_avatar']}}" alt="" class="item__ava" width="47">
+                
+                {% if posts[0] %}
+                    <img src="{{posts[0]['poster_avatar']}}" alt="" class="item__ava" width="47">
+                {% else %}
+                    <img src="" alt="" class="item__ava" width="47">
+                {% endif %}
             </div>
             <span class="item__username">{{user}}</span>
           </a>
