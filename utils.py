@@ -1,14 +1,13 @@
 from json import load, JSONDecodeError
 
-class ToGet:
 
+class ToGet:
     def __init__(self, path):
         """Инициализирует все посты сразу по месту нахождения json"""
-
         if type(path) != str:
             raise TypeError("должно быть str")
-
         self.path = path
+
         try:
             with open(self.path, "r", encoding="utf-8") as file:
                 all_ = load(file)
@@ -19,31 +18,31 @@ class ToGet:
         except JSONDecodeError:
             print("ошибка в json")
 
+
     def get_posts_all(self):
-        """загружает все посты"""
+        """выводит все посты"""
         try:
             return self.all_posts
         except AttributeError:
             ("не был загружен атрибут")
-    
+
 
     def get_posts_by_user(self, user_name):
         """возвращает посты юзера"""
-        
         user_posts = []
         for i in self.all_posts:
             if user_name == i["poster_name"]:
                 user_posts.append(i)
         return user_posts
- 
 
-    def get_post_by_pk(self,pk):
+
+    def get_post_by_pk(self, pk):
         """возвращает один пост по идентефикатору"""
         pk = int(pk)
         for i in self.all_posts:
             if pk == i["pk"]:
                 return i
-  
+
 
     def search_for_posts(self, query):
         """возвращает посты по ключевому слову"""
@@ -63,6 +62,3 @@ class ToGet:
             if post_id == i["post_id"]:
                 comments.append(i)
         return comments
-
-
-
