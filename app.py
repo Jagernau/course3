@@ -34,6 +34,9 @@ def search_posts():
 
     post_from_key = posts.search_for_posts(s)
     count_posts = len(post_from_key)
+    all_posts = posts.get_posts_all()
+    if s == None:
+        return render_template("search.html", posts=all_posts, count=count_posts)
     return render_template("search.html", posts=post_from_key, count=count_posts)
 
 

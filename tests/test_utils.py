@@ -81,4 +81,26 @@ def test_one_post_by_params_user_name(name, correct_pk):
     assert post_pks == correct_pk, "pk не сходятся с именами запостивших"
 
 
+#search
+param_search = [("тарелка", {1}), ("елки", {3}), ("проснулся", {4})]
+@pytest.mark.parametrize("query, post_correct_pk", param_search)
+def test_one_post_by_params_search(query, post_correct_pk):
+    """проверяет совпадение поисковых запросов с pk"""
+    postes = posts.search_for_posts(query)
+    post_pks = set()
+    for i in postes:
+        post_pks.add(i["pk"])
+    assert post_pks == post_correct_pk, "не совпадают pk постов с запрошенным словом"
 
+
+#comments
+param_coments = [(1, {"Очень здорово!", ":)", "Класс!", "Интересно. А где это?"}), (2, {"Класс!", "Хе хе !", "Забавное фото!", "Часть вижу такие фото у друзей! Это новый тренд?"}), (3, {"Выглядит неплохо )", "Каждый раз захожу в ленту и от тебя что то классное!", "!!!", "Так так, продолжай)"}), (4, {"Ухты!", "Норм )", "Оу!", "Интерсно..."}), (5, {"Давно тебя тут не было, с возвращением!", "Ничего себе, вот это ты молодец!"}), (6, {"Класс!"}), (7, {"Очень необычная фоторафия! Где это?"})]
+
+@pytest.mark.parametrize("pk_coment, correct_coments", param_coments)
+def test_coments(pk_coment, correct_coments):
+    """проверяет совпадение коментов по pk"""
+    comentes = coments.get_comments_by_post_id(pk_coment)
+    coment_pks = set()
+    for i in comentes:
+        coment_pks.add(i["comment"])
+    assert coment_pks == correct_coments, "не совпадают коментырии с pk"""

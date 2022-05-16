@@ -1,4 +1,5 @@
 from json import load, JSONDecodeError
+import re
 
 
 class ToGet:
@@ -62,3 +63,19 @@ class ToGet:
             if post_id == i["post_id"]:
                 comments.append(i)
         return comments
+
+
+#функция
+def get_text_tags(posts_list):
+    """возвращает теги в тексте если есть"""
+    posts_contents = []
+    tags = []
+    for i in posts_list:
+        posts_contents.append(i['content'])
+    for content in posts_contents:
+        patern = re.compile(r'\#\w+', re.U)
+        tags.append(re.findall(patern, content))
+    return tags
+
+a = ToGet("./data/posts.json").search_for_posts("типичная")
+print(get_text_tags(a))
