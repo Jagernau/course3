@@ -104,3 +104,4 @@ def test_coments(pk_coment, correct_coments):
     for i in comentes:
         coment_pks.add(i["comment"])
     assert coment_pks == correct_coments, "не совпадают коментырии с pk"""
+
