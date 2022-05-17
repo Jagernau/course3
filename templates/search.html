@@ -46,7 +46,22 @@
         <a href="/posts/{{i['pk']}}" class="item__post-link">
           <img src="{{i['pic']}}" alt="" width="348" class="item__post-img">
         </a>
-        <p class="item__descr"><a href="/tag.html" class="item__tag">#food</a>{{" ".join(i["content"].split(" ")[:10])}}...</p>
+        
+        {% set se = "" %} 
+        {% if searching %}
+            {% set se = searching %}
+        {% endif %}
+        
+        {% if se.startswith("#") %}
+        
+        <p class="item__descr"><a href="/tag/" class="item__tag">{{searching}}</a>{{" ".join(i["content"].split(" ")[:10])}}...</p>
+        
+        {% else %}
+        
+        <p class="item__descr"><a href="" class="item__tag"></a>{{" ".join(i["content"].split(" ")[:10])}}...</p>
+        
+        {% endif %}
+        
         <div class="item__post-info">
           <div class="item__counter">
             <img src="/static/img/eye.png" alt="" class="item__counter-icon" width="26">

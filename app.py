@@ -37,7 +37,7 @@ def search_posts():
     all_posts = posts.get_posts_all()
     if s == None:
         return render_template("search.html", posts=all_posts, count=count_posts)
-    return render_template("search.html", posts=post_from_key, count=count_posts)
+    return render_template("search.html", posts=post_from_key, count=count_posts, searching=s)
 
 
 @app.route("/users/<username>")

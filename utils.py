@@ -49,9 +49,14 @@ class ToGet:
         """возвращает посты по ключевому слову"""
         query = str(query)
         posts_from_keys = []
-        for i in self.all_posts:
-            if query in i["content"]:
-                posts_from_keys.append(i)
+        if query.startswith("#"):
+            for i in self.all_posts:
+                if query in get_text_tags(i["content"]):
+                    posts_from_keys.append(i)
+        else:
+            for i in self.all_posts:
+                if query in i["content"]:
+                    posts_from_keys.append(i)    
         return posts_from_keys
 
 
@@ -66,16 +71,9 @@ class ToGet:
 
 
 #функция
-def get_text_tags(posts_list):
+def get_text_tags(text):
     """возвращает теги в тексте если есть"""
-    posts_contents = []
-    tags = []
-    for i in posts_list:
-        posts_contents.append(i['content'])
-    for content in posts_contents:
-        patern = re.compile(r'\#\w+', re.U)
-        tags.append(re.findall(patern, content))
+    patern = re.compile(r'\#\w+', re.U)
+    tags = set(re.findall(patern, text))
     return tags
 
-a = ToGet("./data/posts.json").search_for_posts("типичная")
-print(get_text_tags(a))
