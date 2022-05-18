@@ -53,12 +53,27 @@
         {% endif %}
         
         {% if se.startswith("#") %}
-        
-        <p class="item__descr"><a href="/tag/" class="item__tag">{{searching}}</a>{{" ".join(i["content"].split(" ")[:10])}}...</p>
+            {% set notag = se.lstrip('#') %}
+        <p class="item__descr"><a href="/tag/{{notag}}" class="item__tag">{{searching}}</a>{{" ".join(i["content"].split(" ")[:10])}}...</p>
         
         {% else %}
         
-        <p class="item__descr"><a href="" class="item__tag"></a>{{" ".join(i["content"].split(" ")[:10])}}...</p>
+            {% if "#" in i["content"] %}
+            
+            {% set tags = get_tags(i["content"]) %}
+            
+            {% for i in tags %}
+            
+            <p class="item__descr"><a href="/tag/{{i.lstrip('#')}}" class="item__tag">{{i}}
+            {% endfor %}
+            </a>{{" ".join(i["content"].split(" ")[:10])}}...</p>
+             
+            {% else %}
+            
+            <p class="item__descr"><a href="" class="item__tag"></a>{{" ".join(i["content"].split(" ")[:10])}}...</p>
+        
+            {% endif %}
+        
         
         {% endif %}
         

@@ -37,7 +37,26 @@
         <a href="/posts/{{i['pk']}}" class="item__post-link">
           <img src="{{i['pic']}}" alt="" width="348" class="item__post-img">
         </a>
-        <p class="item__descr">{{" ".join(i["content"].split(" ")[:10])}}...</p>
+        
+
+        {% if "#" in i["content"] %}
+            
+            {% set tags = get_tags(i["content"]) %}
+            
+            {% for i in tags %}
+            
+            <p class="item__descr"><a href="/tag/{{i.lstrip('#')}}" class="item__tag">{{i}}
+            {% endfor %}
+            </a>{{" ".join(i["content"].split(" ")[:10])}}...</p>
+             
+        {% else %}
+            
+            <p class="item__descr"><a href="" class="item__tag"></a>{{" ".join(i["content"].split(" ")[:10])}}...</p>
+        
+        {% endif %}
+        
+        
+        
         <div class="item__post-info">
           <div class="item__counter">
             <img src="./static/img/eye.png" alt="" class="item__counter-icon" width="26">
