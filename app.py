@@ -4,15 +4,20 @@ import my_logger
 
 
 app = Flask(__name__)
+
+#конфиги приложения
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config["JSON_AS_ASCII"] = False
 
+#пути файлов с json для класса ToGet
 posts = ToGet("./data/posts.json")
 coments = ToGet("./data/comments.json")
+
+#внедрил свою функцию в jinja для поиска тегов
 app.jinja_env.globals.update(get_tags= get_text_tags)
 
 
-
+#вьюшки
 @app.route("/")
 def page_index():
     """главная страница"""
@@ -49,7 +54,7 @@ def user_posts(username):
     return render_template("user-feed.html", posts=user_posts, user=username)
 
 
-
+#api с логгером, логер пишет в /logs/api.log
 @app.route("/api/posts/")
 def api_posts():
     """страница выводит все посты в json"""
@@ -66,6 +71,7 @@ def api_one_post(post_id):
     return jsonify(one_post)
 
 
+#вьюшка 
 @app.route("/tag/<tagname>")
 def post_tags(tagname):
     """вывод всех постов с искомым тегом"""
@@ -87,3 +93,4 @@ def internal_error(e):
 
 if __name__ == "__main__":
     app.run()
+

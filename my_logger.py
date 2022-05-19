@@ -2,6 +2,7 @@ import logging
 
 
 def api_log_info(argument):
+    """логгер принимающий логги сразу в info"""
     logger = logging.getLogger("basic")
     logger.setLevel("DEBUG")
 

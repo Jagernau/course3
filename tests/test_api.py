@@ -3,9 +3,11 @@ from sys import path
 path.append("../")
 import app
 
+#переназначил путь файла с постами для теста
 app.posts = app.ToGet("../data/posts.json")
 
 
+#проверка путей
 def test_api_to_get():
     """проверяет отзывчивость страницы"""
     resp = app.app.test_client().get("/api/posts/", follow_redirects=True)
