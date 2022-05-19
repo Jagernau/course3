@@ -49,7 +49,7 @@ def user_posts(username):
     return render_template("user-feed.html", posts=user_posts, user=username)
 
 
-#Страницы api
+
 @app.route("/api/posts/")
 def api_posts():
     """страница выводит все посты в json"""

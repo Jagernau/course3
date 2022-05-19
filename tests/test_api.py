@@ -5,6 +5,7 @@ import app
 
 app.posts = app.ToGet("../data/posts.json")
 
+
 def test_api_to_get():
     """проверяет отзывчивость страницы"""
     resp = app.app.test_client().get("/api/posts/", follow_redirects=True)
