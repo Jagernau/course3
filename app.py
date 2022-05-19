@@ -1,5 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 from utils import ToGet, get_text_tags
+import my_logger
+
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -8,6 +10,8 @@ app.config["JSON_AS_ASCII"] = False
 posts = ToGet("./data/posts.json")
 coments = ToGet("./data/comments.json")
 app.jinja_env.globals.update(get_tags= get_text_tags)
+
+
 
 @app.route("/")
 def page_index():
@@ -51,15 +55,15 @@ def user_posts(username):
 @app.route("/api/posts/")
 def api_posts():
     """страница выводит все посты в json"""
-
+    my_logger.api_log_info(f"Запрос /api/posts/")
     posts_js = posts.get_posts_all()
     return jsonify(posts_js)
 
 
 @app.route("/api/posts/<post_id>")
 def api_one_post(post_id):
-    """страница выводит один пост json"""
-
+    """страница выводит один пост json"""    
+    my_logger.api_log_info(f"Запрос /api/posts/{post_id}")
     one_post = posts.get_post_by_pk(post_id)
     return jsonify(one_post)
 
