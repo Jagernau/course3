@@ -68,6 +68,7 @@ def api_one_post(post_id):
 
 @app.route("/tag/<tagname>")
 def post_tags(tagname):
+    """вывод всех постов с искомым тегом"""
     plus_tag = "#" + tagname
     post_with_tags = posts.search_for_posts(plus_tag)
 
