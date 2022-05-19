@@ -16,7 +16,6 @@ app.jinja_env.globals.update(get_tags= get_text_tags)
 @app.route("/")
 def page_index():
     """главная страница"""
-
     all_posts = posts.get_posts_all()
     return render_template("index.html", posts=all_posts)
 
@@ -24,7 +23,6 @@ def page_index():
 @app.route("/posts/<post>")
 def page_one_post(post):
     """страница с постом, принимает 'pk'"""
-
     one_post = posts.get_post_by_pk(post)
     comments_of_post = coments.get_comments_by_post_id(post)
     return render_template("post.html", post=one_post, coment=comments_of_post)
@@ -33,7 +31,6 @@ def page_one_post(post):
 @app.route("/search/")
 def search_posts():
     """страница с постами найденными по слову"""
-
     s = request.args.get("s")
 
     post_from_key = posts.search_for_posts(s)
@@ -52,6 +49,7 @@ def user_posts(username):
     return render_template("user-feed.html", posts=user_posts, user=username)
 
 
+#Страницы api
 @app.route("/api/posts/")
 def api_posts():
     """страница выводит все посты в json"""
@@ -74,6 +72,16 @@ def post_tags(tagname):
     post_with_tags = posts.search_for_posts(plus_tag)
 
     return render_template("tag.html", posts=post_with_tags, plus=plus_tag, tagn=tagname)
+
+
+#Обработчик ошибок
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("erors.html", e=e), 404
+
+@app.errorhandler(500)
+def internal_error(e):
+    return render_template('erors.html', e=e), 500
 
 
 if __name__ == "__main__":
